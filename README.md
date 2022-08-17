@@ -1,3 +1,8 @@
+this fork is aimed to build wasmtime-dotnet with Unity.
+copy all src files to editor, and then Unity will compile them.
+
+--------------------------------------------
+
 <div align="center">
   <h1><code>wasmtime-dotnet</code></h1>
 

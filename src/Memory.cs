@@ -157,6 +157,21 @@ namespace Wasmtime
             return GetSpan(store)[address];
         }
 
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // This function is added after forked.
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        /// <summary>
+        /// Read bytes from memory.
+        /// </summary>
+        /// <param name="store"></param>
+        /// <param name="address"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public Span<byte> ReadBytes(IStore store, int address, int length)
+        {
+            return GetSpan(store).Slice(address, length);
+        }
+
         /// <summary>
         /// Writes a byte to memory.
         /// </summary>
@@ -166,6 +181,21 @@ namespace Wasmtime
         public void WriteByte(IStore store, int address, byte value)
         {
             GetSpan(store)[address] = value;
+        }
+
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // This function is added after forked.
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        /// <summary>
+        /// Writes bytes to memory.
+        /// </summary>
+        /// <param name="store"></param>
+        /// <param name="address"></param>
+        /// <param name="value"></param>
+        public void WriteBytes(IStore store, int address, Span<byte> value)
+        {
+            var len = value.Length;
+            value.CopyTo(GetSpan(store).Slice(address, len));
         }
 
         /// <summary>
