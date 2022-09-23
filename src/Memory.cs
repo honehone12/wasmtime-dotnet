@@ -1,3 +1,7 @@
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// This file is modified after forked.
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 using System;
 using System.Buffers.Binary;
 using System.Runtime.InteropServices;
@@ -198,6 +202,20 @@ namespace Wasmtime
             return GetSpan()[address];
         }
 
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // This function is added after forked.
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        /// <summary>
+        /// Read bytes from memory.
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public Span<byte> ReadBytes(int address, int length)
+        {
+            return GetSpan().Slice(address, length);
+        }
+
         /// <summary>
         /// Writes a byte to memory.
         /// </summary>
@@ -206,6 +224,19 @@ namespace Wasmtime
         public void WriteByte(int address, byte value)
         {
             GetSpan()[address] = value;
+        }
+
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // This function is added after forked.
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        /// <summary>
+        /// Writes bytes to memory.
+        /// </summary>
+        /// <param name="address"></param>
+        /// <param name="value"></param>
+        public void WriteBytes(int address, Span<byte> value)
+        {
+            value.CopyTo(GetSpan().Slice(address, value.Length));
         }
 
         /// <summary>
