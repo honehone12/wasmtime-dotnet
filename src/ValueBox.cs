@@ -1,4 +1,8 @@
-﻿using System;
+﻿// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// This file is modified after forked.
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+using System;
 
 namespace Wasmtime
 {
@@ -364,4 +368,33 @@ namespace Wasmtime
             return (T?)value.ExternRefObject;
         }
     }
+
+    //////////////////////////////////////////////
+    // Here are changed codes.
+    // Just removed nullable? from T.
+    // Null return is still possible. 
+    // This change is needed only for net standard 2.1 build.
+    // Need not for Unity, beause it can read c#9. 
+    //////////////////////////////////////////////
+
+    //internal class GenericValueBoxConverter<T>
+    //    : IValueBoxConverter<T>
+    //{
+    //    public static readonly GenericValueBoxConverter<T> Instance = new GenericValueBoxConverter<T>();
+
+    //    private GenericValueBoxConverter()
+    //    {
+    //    }
+
+    //    public ValueBox Box(T value)
+    //    {
+    //        return ValueBox.AsBox((object?)value);
+    //    }
+
+    //    public T Unbox(IStore store, ValueBox value)
+    //    {
+    //        return (T)value.ExternRefObject;
+    //    }
+    //}
+
 }
